@@ -9,7 +9,7 @@ const testStyle = css`
 const Home: NextPage = () => {
   return (
     <div css={testStyle}>
-      <h1>Bagus</h1>
+      <h1>Example With Search and Filter</h1>
     </div>
   );
 };
