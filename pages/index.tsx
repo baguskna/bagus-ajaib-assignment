@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import { css } from "@emotion/react";
+import FilterHandler from "../components/filter-handler";
+import { H1 } from "../lib/design-system";
 
-const testStyle = css`
-  background: red;
-`;
+const testStyle = css``;
 
 const Home: NextPage = () => {
   return (
     <div css={testStyle}>
-      <h1>Example With Search and Filter</h1>
+      <H1>Example With Search and Filter</H1>
+      <FilterHandler />
     </div>
   );
 };
