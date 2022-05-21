@@ -21,3 +21,13 @@ export const LABEL = styled.label`
   font-weight: 500;
   line-height: 20px;
 `;
+
+// button styling
+export const BUTTON = styled.button`
+  border-radius: 5px;
+  background-color: ${COLORS.blue_100};
+  border: transparent;
+  color: ${COLORS.grey_0};
+  cursor: pointer;
+  padding: 8px 10px;
+`;

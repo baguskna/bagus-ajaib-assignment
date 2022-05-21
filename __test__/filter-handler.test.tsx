@@ -41,4 +41,31 @@ describe("Filter Handler component", () => {
     fireEvent.click(buttonCloseElement);
     expect((inputElement as HTMLInputElement).value).toBe("");
   });
+
+  it("should render reser filter button", () => {
+    render(<FilterHandler />);
+    const buttonResetElement = screen.getByRole("button", {
+      name: /reset filter/i,
+    });
+    expect(buttonResetElement).toBeInTheDocument();
+  });
+
+  it("should change gender value", () => {
+    render(<FilterHandler />);
+    const selectElement = screen.getByTestId("gender");
+    fireEvent.change(selectElement, { target: { value: "female" } });
+    expect(selectElement).toHaveValue("female");
+  });
+
+  it("should change gender to 'all'", () => {
+    render(<FilterHandler />);
+    const selectElement = screen.getByTestId("gender");
+    fireEvent.change(selectElement, { target: { value: "female" } });
+    const buttonResetElement = screen.getByRole("button", {
+      name: /reset filter/i,
+    });
+    fireEvent.click(buttonResetElement);
+    console.log((selectElement as HTMLSelectElement).value);
+    expect(selectElement).toHaveValue("");
+  });
 });
