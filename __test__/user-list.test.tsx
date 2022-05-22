@@ -22,7 +22,13 @@ const mockRandomUsers: RandomUserSchema[] = [
 
 describe("User List component", () => {
   it("should render all req user lists", () => {
-    render(<UserList randomUsers={mockRandomUsers} />);
+    render(
+      <UserList
+        buttonActive={1}
+        setButtonActive={jest.fn()}
+        randomUsers={mockRandomUsers}
+      />
+    );
     const usernameElement = screen.getByText("Username");
     const nameElement = screen.getByText("Name");
     const emailElement = screen.getByText(/email/i);
@@ -36,7 +42,13 @@ describe("User List component", () => {
   });
 
   it("should render users", () => {
-    render(<UserList randomUsers={mockRandomUsers} />);
+    render(
+      <UserList
+        buttonActive={1}
+        setButtonActive={jest.fn()}
+        randomUsers={mockRandomUsers}
+      />
+    );
     const fullnameElement = screen.getByTestId("user-fullname");
     const usernameElement = screen.getByTestId("user-name");
     const emailElement = screen.getByTestId("user-email");
