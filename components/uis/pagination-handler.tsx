@@ -32,8 +32,13 @@ const buttonPaginationStyles = css`
   height: 40px;
   width: 40px;
 
+  &:disabled,
   &:hover {
     background: ${COLORS.grey_300};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 `;
 
@@ -78,6 +83,7 @@ const PaginationHandler: (
         <button
           css={[buttonPaginationStyles, chevronLeftPaginationStyles]}
           onClick={() => onPaginationButtonClick(buttonActive - 1, "left")}
+          disabled={buttonActive === 1}
           data-testid="chevron-left"
         >
           <ChevronLeftIcon />
@@ -139,6 +145,7 @@ const PaginationHandler: (
           css={[buttonPaginationStyles, chevronRightPaginationStyles]}
           data-testid="chevron-right"
           onClick={() => onPaginationButtonClick(buttonActive + 1, "right")}
+          disabled={buttonActive === 5}
         >
           <ChevronRightIcon />
         </button>

@@ -26,7 +26,9 @@ const Home: NextPage = () => {
   const [buttonActive, setButtonActive] = useState<number>(1);
   const [genderValue, setGenderValue] = useState<string>("");
   const [inputValue, setInputValue] = useState<string>("");
-  const { data, error } = useRandomUser(`page=${buttonActive}&results=10`);
+  const { data, error } = useRandomUser(
+    `page=${buttonActive}&results=10&gender=${genderValue}`
+  );
 
   console.log(inputValue, genderValue);
 
