@@ -29,5 +29,5 @@ export const BUTTON = styled.button`
   border: transparent;
   color: ${COLORS.grey_0};
   cursor: pointer;
-  padding: 8px 10px;
+  padding: 8px 20px;
 `;
