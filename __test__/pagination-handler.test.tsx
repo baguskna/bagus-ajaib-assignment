@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import PaginationHandler from "../components/uis/pagination-handler";
 
 describe("UI Pagination", () => {
@@ -22,5 +22,25 @@ describe("UI Pagination", () => {
     expect(num3Element).toBeInTheDocument();
     expect(num4Element).toBeInTheDocument();
     expect(num5Element).toBeInTheDocument();
+  });
+
+  it("should change active value incremently", () => {
+    render(<PaginationHandler />);
+    const chevronRightButtonElement = screen.getByTestId("chevron-right");
+    fireEvent.click(chevronRightButtonElement);
+    const activeElement = screen.getByTestId("pagination-button-2-active");
+    expect(activeElement).toBeInTheDocument();
+  });
+
+  it("should change active value decremently", () => {
+    render(<PaginationHandler />);
+    const chevronRightButtonElement = screen.getByTestId("chevron-right");
+    fireEvent.click(chevronRightButtonElement);
+    fireEvent.click(chevronRightButtonElement);
+    fireEvent.click(chevronRightButtonElement);
+    const chevronLeftButtonElement = screen.getByTestId("chevron-left");
+    fireEvent.click(chevronLeftButtonElement);
+    const activeElement = screen.getByTestId("pagination-button-3-active");
+    expect(activeElement).toBeInTheDocument();
   });
 });
