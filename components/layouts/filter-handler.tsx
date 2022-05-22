@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
-import { useState } from "react";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { bp, bpOnly } from "../../lib/breakpoints";
 import { COLORS } from "../../lib/colors";
@@ -208,4 +207,4 @@ const FilterHandler: (props: FilterHandlerProps) => EmotionJSX.Element = ({
   );
 };
 
-export default FilterHandler;
+export default memo(FilterHandler);

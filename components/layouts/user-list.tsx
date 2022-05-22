@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import { memo } from "react";
 import { bp } from "../../lib/breakpoints";
 import { COLORS } from "../../lib/colors";
 import { RandomUserSchema } from "../../lib/interfaces";
@@ -118,4 +119,4 @@ const UserList: (props: UserListProps) => EmotionJSX.Element = ({
   );
 };
 
-export default UserList;
+export default memo(UserList);
