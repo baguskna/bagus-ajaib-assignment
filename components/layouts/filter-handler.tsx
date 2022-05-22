@@ -1,4 +1,4 @@
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
 import { useState } from "react";
 import { useCallback } from "react";
@@ -7,6 +7,13 @@ import { bp, bpOnly } from "../../lib/breakpoints";
 import { COLORS } from "../../lib/colors";
 import { BUTTON, LABEL } from "../../lib/design-system";
 
+interface FilterHandlerProps {
+  genderValue: string;
+  inputValue: string;
+  setGenderValue: (genderValue: string) => void;
+  setInputValue: (inputValue: string) => void;
+}
+
 const filterHandlerContainerStyles = css`
   display: flex;
   flex-direction: column;
@@ -14,6 +21,10 @@ const filterHandlerContainerStyles = css`
 
   ${bp[0]} {
     flex-direction: row;
+  }
+
+  ${bp[1]} {
+    margin-left: 50px;
   }
 `;
 
@@ -91,18 +102,27 @@ const selectGenderStyles = css`
 
 const buttonResetStyles = css`
   height: 45px;
-  margin-left: 16px;
   margin-top: auto;
+
+  ${bpOnly[0]} {
+    margin-top: 8px;
+  }
+
+  ${bp[0]} {
+    margin-left: 16px;
+  }
 
   &:hover {
     background-color: ${COLORS.blue_200};
   }
 `;
 
-const FilterHandler: () => EmotionJSX.Element = () => {
-  const [inputValue, setInputValue] = useState<string>("");
-  const [genderValue, setGenderValue] = useState<string>("");
-
+const FilterHandler: (props: FilterHandlerProps) => EmotionJSX.Element = ({
+  inputValue,
+  genderValue,
+  setGenderValue,
+  setInputValue,
+}) => {
   const onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void =
     useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,13 +154,13 @@ const FilterHandler: () => EmotionJSX.Element = () => {
   return (
     <div css={filterHandlerContainerStyles}>
       <div>
-        <LABEL htmlFor="keyword">Search</LABEL>
+        <LABEL htmlFor="search">Search</LABEL>
         <div css={inputWrapperStyles}>
           <input
             css={inputStyles}
             type="text"
-            name="keyword"
-            id="keyword"
+            name="search"
+            id="search"
             autoComplete="off"
             placeholder="Search..."
             value={inputValue}
