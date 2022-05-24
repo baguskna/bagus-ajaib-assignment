@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import UserList from "../components/layouts/user-list";
+import { AppContext } from "../context/state";
 import { RandomUserSchema } from "../lib/interfaces";
 
 const mockRandomUsers: RandomUserSchema[] = [
@@ -23,11 +24,9 @@ const mockRandomUsers: RandomUserSchema[] = [
 describe("User List component", () => {
   it("should render all req user lists", () => {
     render(
-      <UserList
-        buttonActive={1}
-        setButtonActive={jest.fn()}
-        randomUsers={mockRandomUsers}
-      />
+      <AppContext.Provider value={{ randomUsers: mockRandomUsers }}>
+        <UserList />
+      </AppContext.Provider>
     );
     const usernameElement = screen.getByText("Username");
     const nameElement = screen.getByText("Name");
@@ -43,11 +42,9 @@ describe("User List component", () => {
 
   it("should render users", () => {
     render(
-      <UserList
-        buttonActive={1}
-        setButtonActive={jest.fn()}
-        randomUsers={mockRandomUsers}
-      />
+      <AppContext.Provider value={{ randomUsers: mockRandomUsers }}>
+        <UserList />
+      </AppContext.Provider>
     );
     const fullnameElement = screen.getByTestId("user-fullname");
     const usernameElement = screen.getByTestId("user-name");
@@ -63,11 +60,9 @@ describe("User List component", () => {
 
   it("should render loading layout", () => {
     render(
-      <UserList
-        buttonActive={1}
-        setButtonActive={jest.fn()}
-        randomUsers={undefined}
-      />
+      <AppContext.Provider value={{ randomUsers: undefined }}>
+        <UserList />
+      </AppContext.Provider>
     );
     const loadingElement = screen.getByTestId("skeleton");
     expect(loadingElement).toBeInTheDocument();

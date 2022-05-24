@@ -1,9 +1,16 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import PaginationHandler from "../components/uis/pagination-handler";
+import { AppContext } from "../context/state";
 
 describe("UI Pagination", () => {
   it("should render pagination arrows", () => {
-    render(<PaginationHandler buttonActive={1} setButtonActive={jest.fn()} />);
+    render(
+      <AppContext.Provider
+        value={{ buttonActive: 1, setButtonActive: jest.fn() }}
+      >
+        <PaginationHandler />
+      </AppContext.Provider>
+    );
     const chevronLeftElement = screen.getByTestId("ChevronLeftIcon");
     const chevronRightElement = screen.getByTestId("ChevronRightIcon");
     expect(chevronLeftElement).toBeInTheDocument();
@@ -11,7 +18,11 @@ describe("UI Pagination", () => {
   });
 
   it("should render pagination buttons", () => {
-    render(<PaginationHandler buttonActive={1} setButtonActive={jest.fn()} />);
+    render(
+      <AppContext.Provider value={{ buttonActive: 1 }}>
+        <PaginationHandler />
+      </AppContext.Provider>
+    );
     const num1Element = screen.getByText(/1/i);
     const num2Element = screen.getByText(/2/i);
     const num3Element = screen.getByText(/3/i);
@@ -26,14 +37,22 @@ describe("UI Pagination", () => {
 
   it("should change active value incremently", async () => {
     const { rerender } = render(
-      <PaginationHandler buttonActive={1} setButtonActive={jest.fn()} />
+      <AppContext.Provider
+        value={{ buttonActive: 1, setButtonActive: jest.fn() }}
+      >
+        <PaginationHandler />
+      </AppContext.Provider>
     );
     const chevronRightButtonElement = await screen.findByTestId(
       "chevron-right"
     );
     fireEvent.click(chevronRightButtonElement);
     rerender(
-      <PaginationHandler buttonActive={2} setButtonActive={jest.fn()} />
+      <AppContext.Provider
+        value={{ buttonActive: 2, setButtonActive: jest.fn() }}
+      >
+        <PaginationHandler />
+      </AppContext.Provider>
     );
     const activeElement = await screen.findByTestId(
       "pagination-button-2-active"
@@ -43,19 +62,31 @@ describe("UI Pagination", () => {
 
   it("should change active value decremently", () => {
     const { rerender } = render(
-      <PaginationHandler buttonActive={1} setButtonActive={jest.fn()} />
+      <AppContext.Provider
+        value={{ buttonActive: 1, setButtonActive: jest.fn() }}
+      >
+        <PaginationHandler />
+      </AppContext.Provider>
     );
     const chevronRightButtonElement = screen.getByTestId("chevron-right");
     fireEvent.click(chevronRightButtonElement);
     fireEvent.click(chevronRightButtonElement);
     fireEvent.click(chevronRightButtonElement);
     rerender(
-      <PaginationHandler buttonActive={4} setButtonActive={jest.fn()} />
+      <AppContext.Provider
+        value={{ buttonActive: 4, setButtonActive: jest.fn() }}
+      >
+        <PaginationHandler />
+      </AppContext.Provider>
     );
     const chevronLeftButtonElement = screen.getByTestId("chevron-left");
     fireEvent.click(chevronLeftButtonElement);
     rerender(
-      <PaginationHandler buttonActive={3} setButtonActive={jest.fn()} />
+      <AppContext.Provider
+        value={{ buttonActive: 3, setButtonActive: jest.fn() }}
+      >
+        <PaginationHandler />
+      </AppContext.Provider>
     );
     const activeElement = screen.getByTestId("pagination-button-3-active");
     expect(activeElement).toBeInTheDocument();
