@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import { Skeleton } from "@mui/material";
 import { memo } from "react";
 import { bp } from "../../lib/breakpoints";
 import { COLORS } from "../../lib/colors";
@@ -14,18 +15,18 @@ interface UserListProps {
 
 const tableWrapper = css``;
 
-const tableWrapperFirstTier = css`
-  overflow-x: auto;
-`;
+const tableWrapperFirstTier = css``;
 
-const tableContainer = css``;
-
-const tableWrapperSecondTier = css`
+const tableContainer = css`
   margin-top: 30px;
 
   ${bp[1]} {
     margin: 50px;
   }
+`;
+
+const tableWrapperSecondTier = css`
+  overflow-x: auto;
 `;
 
 const tableStyles = css`
@@ -59,60 +60,68 @@ const UserList: (props: UserListProps) => EmotionJSX.Element = ({
   setButtonActive,
   randomUsers,
 }) => {
-  // if (!randomUsers) {
-  //   return <div css={tableWrapperSecondTier}>Loading...</div>;
-  // }
+  const mainContent = () => {
+    if (!randomUsers) {
+      return (
+        <Skeleton
+          data-testid="skeleton"
+          variant="rectangular"
+          width="100%"
+          height={431}
+        />
+      );
+    }
+    return (
+      <table css={tableStyles}>
+        <thead css={theadStyles}>
+          <tr>
+            <th css={thStyles}>Name</th>
+            <th css={thStyles}>Username</th>
+            <th css={thStyles}>Email</th>
+            <th css={thStyles}>Gender</th>
+            <th css={thStyles}>Registered Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {randomUsers?.map((user: RandomUserSchema, i: number) => (
+            <tr
+              key={user.login.username}
+              css={i % 2 !== 0 ? rowGreyStyles : null}
+            >
+              <td data-testid="user-fullname" css={tdStyles}>
+                {user.name.first} {user.name.last}
+              </td>
+              <td data-testid="user-name" css={tdStyles}>
+                {user.login.username}
+              </td>
+              <td data-testid="user-email" css={tdStyles}>
+                {user.email}
+              </td>
+              <td data-testid="user-gender" css={tdStyles}>
+                {user.gender}
+              </td>
+              <td data-testid="user-registered-date" css={tdStyles}>
+                {Intl.DateTimeFormat("en-GB", {
+                  dateStyle: "medium",
+                  timeStyle: "medium",
+                }).format(new Date(user.registered.date))}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
     <div css={tableWrapper}>
       <div css={tableWrapperFirstTier}>
         <div css={tableContainer}>
-          <div css={tableWrapperSecondTier}>
-            <table css={tableStyles}>
-              <thead css={theadStyles}>
-                <tr>
-                  <th css={thStyles}>Name</th>
-                  <th css={thStyles}>Username</th>
-                  <th css={thStyles}>Email</th>
-                  <th css={thStyles}>Gender</th>
-                  <th css={thStyles}>Registered Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {randomUsers?.map((user: RandomUserSchema, i: number) => (
-                  <tr
-                    key={user.login.username}
-                    css={i % 2 !== 0 ? rowGreyStyles : null}
-                  >
-                    <td data-testid="user-fullname" css={tdStyles}>
-                      {user.name.first} {user.name.last}
-                    </td>
-                    <td data-testid="user-name" css={tdStyles}>
-                      {user.login.username}
-                    </td>
-                    <td data-testid="user-email" css={tdStyles}>
-                      {user.email}
-                    </td>
-                    <td data-testid="user-gender" css={tdStyles}>
-                      {user.gender}
-                    </td>
-                    <td data-testid="user-registered-date" css={tdStyles}>
-                      {Intl.DateTimeFormat("en-GB", {
-                        dateStyle: "medium",
-                        timeStyle: "medium",
-                      }).format(new Date(user.registered.date))}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div>
-              <PaginationHandler
-                buttonActive={buttonActive}
-                setButtonActive={setButtonActive}
-              />
-            </div>
-          </div>
+          <div css={tableWrapperSecondTier}>{mainContent()}</div>
+          <PaginationHandler
+            buttonActive={buttonActive}
+            setButtonActive={setButtonActive}
+          />
         </div>
       </div>
     </div>
