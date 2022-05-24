@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { RandomUserSchema } from "../lib/interfaces";
+import { AppContextValueSchema, RandomUserSchema } from "../lib/interfaces";
 import useRandomUser from "../shared/use-random-users";
 
 interface AppWrapperProps {
   children: React.ReactNode;
 }
 
-export const AppContext = createContext<any | undefined>(undefined);
+export const AppContext = createContext<AppContextValueSchema | undefined>(
+  undefined
+);
 
 export function AppWrapper({ children }: AppWrapperProps): JSX.Element {
   const [buttonActive, setButtonActive] = useState<number>(1);
