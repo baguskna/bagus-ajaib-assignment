@@ -5,13 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { bp, bpOnly } from "../../lib/breakpoints";
 import { COLORS } from "../../lib/colors";
 import { BUTTON, LABEL } from "../../lib/design-system";
-
-interface FilterHandlerProps {
-  genderValue: string;
-  inputValue: string;
-  setGenderValue: (genderValue: string) => void;
-  setInputValue: (inputValue: string) => void;
-}
+import { useAppContext } from "../../context/state";
 
 const filterHandlerContainerStyles = css`
   display: flex;
@@ -116,12 +110,10 @@ const buttonResetStyles = css`
   }
 `;
 
-const FilterHandler: (props: FilterHandlerProps) => EmotionJSX.Element = ({
-  inputValue,
-  genderValue,
-  setGenderValue,
-  setInputValue,
-}) => {
+const FilterHandler: () => EmotionJSX.Element = () => {
+  const { genderValue, inputValue, setGenderValue, setInputValue } =
+    useAppContext();
+
   const onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void =
     useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {

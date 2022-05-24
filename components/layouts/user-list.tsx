@@ -2,16 +2,11 @@ import { css } from "@emotion/react";
 import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
 import { Skeleton } from "@mui/material";
 import { memo } from "react";
+import { useAppContext } from "../../context/state";
 import { bp } from "../../lib/breakpoints";
 import { COLORS } from "../../lib/colors";
 import { RandomUserSchema } from "../../lib/interfaces";
 import PaginationHandler from "../uis/pagination-handler";
-
-interface UserListProps {
-  buttonActive: number;
-  randomUsers: RandomUserSchema[] | undefined;
-  setButtonActive: (buttonActive: number) => void;
-}
 
 const tableWrapper = css``;
 
@@ -55,11 +50,9 @@ const rowGreyStyles = css`
   background-color: ${COLORS.grey_300};
 `;
 
-const UserList: (props: UserListProps) => EmotionJSX.Element = ({
-  buttonActive,
-  setButtonActive,
-  randomUsers,
-}) => {
+const UserList: () => EmotionJSX.Element = () => {
+  const { randomUsers } = useAppContext();
+
   const mainContent = () => {
     if (!randomUsers) {
       return (
@@ -118,10 +111,7 @@ const UserList: (props: UserListProps) => EmotionJSX.Element = ({
       <div css={tableWrapperFirstTier}>
         <div css={tableContainer}>
           <div css={tableWrapperSecondTier}>{mainContent()}</div>
-          <PaginationHandler
-            buttonActive={buttonActive}
-            setButtonActive={setButtonActive}
-          />
+          <PaginationHandler />
         </div>
       </div>
     </div>

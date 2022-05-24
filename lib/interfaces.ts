@@ -23,3 +23,13 @@ export interface ResponseRandomUserSchema {
     version: string;
   };
 }
+
+export interface AppContextValueSchema {
+  randomUsers?: RandomUserSchema[] | undefined;
+  buttonActive?: number;
+  setButtonActive?: (buttonActive: number) => void;
+  genderValue?: string;
+  setGenderValue?: (genderValue: string) => void;
+  inputValue?: string;
+  setInputValue?: (inputValue: string) => void;
+}

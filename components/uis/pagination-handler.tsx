@@ -3,12 +3,8 @@ import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useCallback } from "react";
+import { useAppContext } from "../../context/state";
 import { COLORS } from "../../lib/colors";
-
-interface PaginationHandlerProps {
-  buttonActive: number;
-  setButtonActive: (buttonActive: number) => void;
-}
 
 const paginationWrapperStyles = css`
   display: flex;
@@ -62,9 +58,9 @@ const buttonActiveStyles = css`
   color: ${COLORS.blue_100};
 `;
 
-const PaginationHandler: (
-  props: PaginationHandlerProps
-) => EmotionJSX.Element = ({ buttonActive, setButtonActive }) => {
+const PaginationHandler: () => EmotionJSX.Element = () => {
+  const { buttonActive, setButtonActive } = useAppContext();
+
   const onPaginationButtonClick = useCallback(
     (page: number, chevron?: string) => {
       if (
