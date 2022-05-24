@@ -60,4 +60,16 @@ describe("User List component", () => {
     expect(genderElement).toBeInTheDocument();
     expect(registeredElement).toBeInTheDocument();
   });
+
+  it("should render loading layout", () => {
+    render(
+      <UserList
+        buttonActive={1}
+        setButtonActive={jest.fn()}
+        randomUsers={undefined}
+      />
+    );
+    const loadingElement = screen.getByTestId("skeleton");
+    expect(loadingElement).toBeInTheDocument();
+  });
 });
