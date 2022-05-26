@@ -76,31 +76,35 @@ const UserList: () => EmotionJSX.Element = () => {
           </tr>
         </thead>
         <tbody>
-          {randomUsers?.map((user: RandomUserSchema, i: number) => (
-            <tr
-              key={user.login.username}
-              css={i % 2 !== 0 ? rowGreyStyles : null}
-            >
-              <td data-testid="user-fullname" css={tdStyles}>
-                {user.name.first} {user.name.last}
-              </td>
-              <td data-testid="user-name" css={tdStyles}>
-                {user.login.username}
-              </td>
-              <td data-testid="user-email" css={tdStyles}>
-                {user.email}
-              </td>
-              <td data-testid="user-gender" css={tdStyles}>
-                {user.gender}
-              </td>
-              <td data-testid="user-registered-date" css={tdStyles}>
-                {Intl.DateTimeFormat("en-GB", {
-                  dateStyle: "medium",
-                  timeStyle: "medium",
-                }).format(new Date(user.registered.date))}
-              </td>
-            </tr>
-          ))}
+          {randomUsers.length === 0 ? (
+            <tr>User doesn&apos;t exits</tr>
+          ) : (
+            randomUsers?.map((user: RandomUserSchema, i: number) => (
+              <tr
+                key={user.login.username}
+                css={i % 2 !== 0 ? rowGreyStyles : null}
+              >
+                <td data-testid="user-fullname" css={tdStyles}>
+                  {user.name.first} {user.name.last}
+                </td>
+                <td data-testid="user-name" css={tdStyles}>
+                  {user.login.username}
+                </td>
+                <td data-testid="user-email" css={tdStyles}>
+                  {user.email}
+                </td>
+                <td data-testid="user-gender" css={tdStyles}>
+                  {user.gender}
+                </td>
+                <td data-testid="user-registered-date" css={tdStyles}>
+                  {Intl.DateTimeFormat("en-GB", {
+                    dateStyle: "medium",
+                    timeStyle: "medium",
+                  }).format(new Date(user.registered.date))}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     );
